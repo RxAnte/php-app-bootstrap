@@ -13,14 +13,8 @@ readonly class BuildContainer
         callable|null $register = null,
         BuildContainerConfiguration $config = new BuildContainerConfiguration(),
     ): ContainerInterface {
-        $containerBindings = new ContainerBindings();
+        $containerBindings = new Bindings();
 
-        /**
-         * Register local bindings that AppBootstrap needs. Though technically
-         * right now we could register them via the callable, the idea is to
-         * move this AppBootstrap to its own package, and at that point this
-         * package would need to register its own dependencies first
-         */
         RegisterBootstrapDependencies::register(
             $containerBindings,
         );
@@ -31,7 +25,7 @@ readonly class BuildContainer
 
         $builder = (new ContainerBuilder())
             ->useAutowiring(true)
-            ->addDefinitions($containerBindings->bindings());
+            ->addDefinitions($containerBindings->getBindings());
 
         if ($config->enableCompilationToDir !== null) {
             $builder = $builder->enableCompilation(

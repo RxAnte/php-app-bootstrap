@@ -10,35 +10,95 @@ use Crell\Tukio\OrderedProviderInterface;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
+use RxAnte\AppBootstrap\Http\RequestResponseCustom;
+use Slim\CallableResolver;
+use Slim\Interfaces\AdvancedCallableResolverInterface;
+use Slim\Interfaces\CallableResolverInterface;
+use Slim\Interfaces\RouteCollectorInterface;
+use Slim\Routing\RouteCollector;
 
 readonly class RegisterBootstrapDependencies
 {
-    public static function register(ContainerBindings $containerBindings): void
+    public static function register(Bindings $bindings): void
     {
-        $containerBindings->addBinding(
+        self::registerSlimBindings($bindings);
+        self::registerEventBindings($bindings);
+    }
+
+    private static function registerSlimBindings(
+        Bindings $bindings,
+    ): void {
+        $bindings->addBinding(
+            RouteCollector::class,
+            $bindings->autowire(RouteCollector::class)
+                ->constructorParameter(
+                    'defaultInvocationStrategy',
+                    $bindings->resolveFromContainer(
+                        RequestResponseCustom::class,
+                    ),
+                ),
+        );
+
+        $bindings->addBinding(
+            CallableResolver::class,
+            $bindings->autowire(CallableResolver::class)
+                ->constructorParameter(
+                    'container',
+                    $bindings->resolveFromContainer(
+                        ContainerInterface::class,
+                    ),
+                ),
+        );
+
+        $bindings->addBinding(
+            CallableResolverInterface::class,
+            $bindings->resolveFromContainer(
+                CallableResolver::class,
+            ),
+        );
+
+        $bindings->addBinding(
+            AdvancedCallableResolverInterface::class,
+            $bindings->resolveFromContainer(
+                CallableResolver::class,
+            ),
+        );
+
+        $bindings->addBinding(
+            RouteCollectorInterface::class,
+            $bindings->resolveFromContainer(
+                RouteCollector::class,
+            ),
+        );
+    }
+
+    private static function registerEventBindings(
+        Bindings $bindings,
+    ): void {
+        $bindings->addBinding(
             EventDispatcherInterface::class,
-            $containerBindings->resolveFromContainer(Dispatcher::class),
+            $bindings->resolveFromContainer(Dispatcher::class),
         );
 
-        $containerBindings->addBinding(
+        $bindings->addBinding(
             ListenerProviderInterface::class,
-            $containerBindings->resolveFromContainer(
+            $bindings->resolveFromContainer(
                 OrderedListenerProvider::class,
             ),
         );
 
-        $containerBindings->addBinding(
+        $bindings->addBinding(
             OrderedProviderInterface::class,
-            $containerBindings->resolveFromContainer(
+            $bindings->resolveFromContainer(
                 OrderedListenerProvider::class,
             ),
         );
 
-        $containerBindings->addBinding(
+        $bindings->addBinding(
             OrderedListenerProvider::class,
-            $containerBindings->autowire()->constructorParameter(
+            $bindings->autowire()->constructorParameter(
                 'container',
-                $containerBindings->resolveFromContainer(
+                $bindings->resolveFromContainer(
                     ContainerInterface::class,
                 ),
             ),

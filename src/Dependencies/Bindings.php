@@ -10,13 +10,13 @@ use DI\Definition\Reference;
 use function DI\autowire;
 use function DI\get;
 
-class ContainerBindings
+class Bindings
 {
     /** @var array<string, string|callable|object> */
     private array $bindings = [];
 
     /** @return array<string, string|callable|object> */
-    public function bindings(): array
+    public function getBindings(): array
     {
         return $this->bindings;
     }
