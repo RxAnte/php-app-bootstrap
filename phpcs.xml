@@ -9,10 +9,15 @@
 
     <!-- Directories to be checked -->
     <file>src</file>
+    <file>tests</file>
 
     <!-- Include full Doctrine Coding Standard -->
     <rule ref="Doctrine">
         <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix"/>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Functions.StaticClosure.ClosureNotStatic">
+        <exclude-pattern>Test.php</exclude-pattern>
     </rule>
 </ruleset>
