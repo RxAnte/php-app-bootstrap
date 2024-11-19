@@ -35,6 +35,7 @@ readonly class RequestResponseCustom implements InvocationStrategyInterface
 
         $this->eventDispatcher->dispatch($event);
 
+        /** @phpstan-ignore-next-line */
         return call_user_func_array(
             $callable,
             array_merge(
