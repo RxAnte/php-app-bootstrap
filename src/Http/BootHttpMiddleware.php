@@ -22,7 +22,7 @@ readonly class BootHttpMiddleware
     }
 
     public function applyMiddleware(
-        BootHttpMiddlewareConfig $config,
+        BootHttpMiddlewareConfig $config = new BootHttpMiddlewareConfig(),
     ): Run {
         $this->eventDispatcher->dispatch(new ApplyMiddlewareEvent(
             $this->app,
