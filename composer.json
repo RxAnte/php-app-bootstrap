@@ -23,6 +23,9 @@
     "require-dev": {
         "doctrine/coding-standard": "^12.0",
         "filp/whoops": "^2.16",
+        "jetbrains/phpstorm-attributes": "^1.2",
+        "mockery/mockery": "^1.6",
+        "pestphp/pest": "^3.5",
         "phpcsstandards/php_codesniffer": "^3.10",
         "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-deprecation-rules": "^1.2",
@@ -37,7 +40,8 @@
         "bin-compat": "full",
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "pestphp/pest-plugin": true
         }
     }
 }
