@@ -20,6 +20,8 @@ use Slim\Interfaces\CallableResolverInterface;
 use Slim\Interfaces\RouteCollectorInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Routing\RouteCollector;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 readonly class RegisterBootstrapDependencies
 {
@@ -27,6 +29,7 @@ readonly class RegisterBootstrapDependencies
     {
         self::registerSlimBindings($bindings);
         self::registerEventBindings($bindings);
+        self::registerConsoleBindings($bindings);
     }
 
     private static function registerSlimBindings(
@@ -119,6 +122,14 @@ readonly class RegisterBootstrapDependencies
                     ContainerInterface::class,
                 ),
             ),
+        );
+    }
+
+    private static function registerConsoleBindings(Bindings $bindings): void
+    {
+        $bindings->addBinding(
+            ConsoleOutputInterface::class,
+            $bindings->resolveFromContainer(ConsoleOutput::class),
         );
     }
 }
