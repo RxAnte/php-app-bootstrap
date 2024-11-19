@@ -14,7 +14,7 @@ use function restore_exception_handler;
 use function test;
 use function uses;
 
-uses()->group('Bootstrap', 'BootstrapCli');
+uses()->group('Bootstrap', 'BootCli');
 
 $input = new ArrayInput([]);
 

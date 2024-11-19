@@ -18,7 +18,7 @@ use function uses;
 
 use const PHP_EOL;
 
-uses()->group('Bootstrap', 'BootstrapHttp');
+uses()->group('Bootstrap', 'BootHttp');
 
 test(
     'Slim boots with Whoops JsonResponseHandler',
