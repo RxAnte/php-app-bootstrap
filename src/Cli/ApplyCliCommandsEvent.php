@@ -16,7 +16,7 @@ use function is_string;
 
 readonly class ApplyCliCommandsEvent
 {
-    public function __construct(private readonly Application $app)
+    public function __construct(private Application $app)
     {
     }
 
