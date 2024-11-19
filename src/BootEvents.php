@@ -14,7 +14,7 @@ readonly class BootEvents
     ) {
     }
 
-    public function registerEvents(
+    public function registerEventSubscribers(
         callable|null $register = null,
     ): BootApplication {
         if ($register !== null) {
