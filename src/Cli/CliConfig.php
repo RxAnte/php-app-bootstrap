@@ -6,7 +6,8 @@ namespace RxAnte\AppBootstrap\Cli;
 
 readonly class CliConfig
 {
-    public function __construct(public string $cliAppName)
-    {
+    public function __construct(
+        public string $cliAppName = 'RxAnte Bootstrap CLI',
+    ) {
     }
 }

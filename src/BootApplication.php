@@ -42,8 +42,9 @@ readonly class BootApplication
         );
     }
 
-    public function buildCliApplication(CliConfig $cliConfig): BootCommands
-    {
+    public function buildCliApplication(
+        CliConfig $cliConfig = new CliConfig(),
+    ): BootCommands {
         $app = new Application($cliConfig->cliAppName);
 
         $app->useContainer($this->container);
