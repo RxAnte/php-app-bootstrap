@@ -10,11 +10,15 @@ use Crell\Tukio\OrderedProviderInterface;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use RxAnte\AppBootstrap\Http\RequestResponseCustom;
 use Slim\CallableResolver;
+use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Interfaces\AdvancedCallableResolverInterface;
 use Slim\Interfaces\CallableResolverInterface;
 use Slim\Interfaces\RouteCollectorInterface;
+use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Routing\RouteCollector;
 
 readonly class RegisterBootstrapDependencies
@@ -28,6 +32,19 @@ readonly class RegisterBootstrapDependencies
     private static function registerSlimBindings(
         Bindings $bindings,
     ): void {
+        $bindings->addBinding(
+            ServerRequestInterface::class,
+            static function () {
+                return ServerRequestCreatorFactory::create()
+                    ->createServerRequestFromGlobals();
+            },
+        );
+
+        $bindings->addBinding(
+            ResponseFactoryInterface::class,
+            $bindings->resolveFromContainer(ResponseFactory::class),
+        );
+
         $bindings->addBinding(
             RouteCollector::class,
             $bindings->autowire(RouteCollector::class)
