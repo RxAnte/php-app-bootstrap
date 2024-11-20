@@ -46,12 +46,12 @@ readonly class ApplyCliCommandsEvent
     }
 
     /**
-     * @param Command|class-string<SymfonyCommand> $command
+     * @param SymfonyCommand|class-string<SymfonyCommand> $command
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function addSymfonyCommand(Command|string $command): SymfonyCommand
+    public function addSymfonyCommand(SymfonyCommand|string $command): SymfonyCommand
     {
         if (is_string($command)) {
             /** @phpstan-ignore-next-line */
