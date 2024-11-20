@@ -9,7 +9,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use Slim\Factory\AppFactory;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 use function implode;
 use function is_string;
@@ -27,7 +27,7 @@ readonly class ConfigListRoutesCommand
     public function __construct(
         private ContainerInterface $container,
         private EventDispatcherInterface $eventDispatcher,
-        private ConsoleOutput $output,
+        private ConsoleOutputInterface $output,
     ) {
     }
 

@@ -34,7 +34,8 @@
     },
     "autoload": {
         "psr-4": {
-            "RxAnte\\AppBootstrap\\": "src"
+            "RxAnte\\AppBootstrap\\": "src",
+            "RxAnte\\Tests\\": "tests"
         }
     },
     "config": {
