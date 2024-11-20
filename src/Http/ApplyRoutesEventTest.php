@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace RxAnte\AppBootstrap\Http;
 
+use RxAnte\AppBootstrap\Dependencies\BuildContainer;
 use RxAnte\AppBootstrap\Http\TestSupport\ApplyRoutesTestSupport;
 use Slim\Exception\HttpMethodNotAllowedException;
 use Slim\Exception\HttpNotFoundException;
@@ -21,7 +22,6 @@ test(
     function (): void {
         $app = AppFactory::create();
 
-        /** @phpstan-ignore-next-line */
         $applyRoutesEvent = new ApplyRoutesEvent($app);
 
         $testSupport = new ApplyRoutesTestSupport();
@@ -192,5 +192,18 @@ test(
         $app->setBasePath('/foo/bar');
         expect($applyRoutesEvent->getBasePath())
             ->toBe('/foo/bar');
+    },
+);
+
+test(
+    'Apply routes event getContainer method is available',
+    function (): void {
+        $container = BuildContainer::build();
+
+        $app = AppFactory::create(container: $container);
+
+        $applyRoutesEvent = new ApplyRoutesEvent($app);
+
+        expect($applyRoutesEvent->getContainer())->toBe($container);
     },
 );
