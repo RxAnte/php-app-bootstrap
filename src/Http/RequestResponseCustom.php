@@ -31,7 +31,11 @@ readonly class RequestResponseCustom implements InvocationStrategyInterface
             $request = $request->withAttribute($k, $v);
         }
 
-        $event = new RequestResponseEvent([$routeArguments]);
+        $event = new RequestResponseEvent(
+            [$routeArguments],
+            $request,
+            $response,
+        );
 
         $this->eventDispatcher->dispatch($event);
 
