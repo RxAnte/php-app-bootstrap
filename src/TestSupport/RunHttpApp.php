@@ -8,8 +8,10 @@ use Psr\Http\Message\ResponseInterface;
 use RxAnte\AppBootstrap\Boot;
 use RxAnte\AppBootstrap\BootConfig;
 use RxAnte\AppBootstrap\Dependencies\Bindings;
+use RxAnte\AppBootstrap\Dependencies\BuildContainerConfiguration;
 use RxAnte\AppBootstrap\Dependencies\RegisterBootstrapDependencies;
 use RxAnte\AppBootstrap\Http\BootHttpMiddlewareConfig;
+use RxAnte\AppBootstrap\SrcDir;
 use Slim\ResponseEmitter;
 
 use function assert;
@@ -33,16 +35,22 @@ readonly class RunHttpApp
                 isCli: false,
                 useWhoopsErrorHandling: true,
             ))
-            ->buildContainer(static function (
-                Bindings $bindings,
-            ) use ($responseEmitter): void {
-                RegisterBootstrapDependencies::register($bindings);
+            ->buildContainer(
+                register: static function (
+                    Bindings $bindings,
+                ) use ($responseEmitter): void {
+                    RegisterBootstrapDependencies::register($bindings);
 
-                $bindings->addBinding(
-                    ResponseEmitter::class,
-                    $responseEmitter,
-                );
-            })
+                    $bindings->addBinding(
+                        ResponseEmitter::class,
+                        $responseEmitter,
+                    );
+                },
+                config: new BuildContainerConfiguration(
+                    enableCompilationToDir: SrcDir::testsCacheDir() . '/di-compiled',
+                    writeProxiesToDir: SrcDir::testsCacheDir() . '/di-proxies',
+                ),
+            )
             ->registerEventSubscribers()
             ->buildHttpApplication()
             ->applyRoutes()

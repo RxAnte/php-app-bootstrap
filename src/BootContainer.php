@@ -15,7 +15,10 @@ readonly class BootContainer
         callable|null $register = null,
         BuildContainerConfiguration $config = new BuildContainerConfiguration(),
     ): BootEvents {
-        $container = BuildContainer::build($register);
+        $container = BuildContainer::build(
+            $register,
+            $config,
+        );
 
         $bootEvents = $container->get(BootEvents::class);
 
