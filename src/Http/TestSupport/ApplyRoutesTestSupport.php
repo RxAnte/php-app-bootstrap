@@ -113,13 +113,11 @@ readonly class ApplyRoutesTestSupport
 
         assert($body instanceof MockInterface);
 
-        /** @phpstan-ignore-next-line */
         $body->shouldReceive('getContents')
             ->andReturn($bodyText);
 
         $response = Mockery::mock(ResponseInterface::class);
 
-        /** @phpstan-ignore-next-line */
         $response->shouldReceive('getBody')->andReturn($body);
 
         assert($response instanceof ResponseInterface);

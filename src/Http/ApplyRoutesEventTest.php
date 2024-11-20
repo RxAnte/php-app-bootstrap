@@ -22,6 +22,7 @@ test(
     function (): void {
         $app = AppFactory::create();
 
+        /** @phpstan-ignore-next-line */
         $applyRoutesEvent = new ApplyRoutesEvent($app);
 
         $testSupport = new ApplyRoutesTestSupport();
