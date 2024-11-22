@@ -36,6 +36,8 @@ readonly class BootApplication
             routeCollector: $routeCollector,
         );
 
+        $app->addBodyParsingMiddleware();
+
         return new BootHttpRoutes(
             $app,
             $this->eventDispatcher,
