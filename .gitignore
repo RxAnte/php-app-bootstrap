@@ -4,3 +4,5 @@
 /.idea/git_toolbox_blame.xml
 /.idea/vcs.xml
 /vendor
+/sync-on-save-env.php
+/.idea/copilot.*

@@ -1,0 +1,36 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$syncOnSaveEnvFilePath = __DIR__ . '/sync-on-save-env.php';
+
+if (!file_exists($syncOnSaveEnvFilePath)) {
+    file_put_contents(
+        $syncOnSaveEnvFilePath,
+        implode(PHP_EOL, [
+            '<?php',
+            '',
+            'declare(strict_types=1);',
+            '',
+            '// An array of paths to copy the `src` directory to any time a file is saved',
+            'return [];',
+            '',
+        ]),
+    );
+}
+
+$paths = require $syncOnSaveEnvFilePath;
+
+array_map(
+    function (string $path): void {
+        $path = rtrim($path, '/');
+
+        if (file_exists($path)) {
+            shell_exec('sudo rm -rf ' . $path . '/src');
+        }
+
+        shell_exec('sudo cp -rf ' . __DIR__ . '/src ' . $path . '/');
+    },
+    $paths,
+);
