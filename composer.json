@@ -10,6 +10,7 @@
     ],
     "require": {
         "php": "^8.2",
+        "composer/class-map-generator": "^1.6",
         "crell/tukio": "^2.0",
         "mnapoli/silly": "^1.9",
         "php-di/php-di": "^7.0",
