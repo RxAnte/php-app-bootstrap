@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b1691fdd380dc43186609a4d9448596",
+    "content-hash": "5004696e2733c09416d69d8d302503be",
     "packages": [
         {
             "name": "composer/class-map-generator",
@@ -5969,16 +5969,55 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "zoltanka/bypass-readonly",
+            "version": "dev-bugfix",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tjdraper/bypass-readonly.git",
+                "reference": "ca502901df8baf35bcd30e71a50662fd21aea195"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tjdraper/bypass-readonly/zipball/ca502901df8baf35bcd30e71a50662fd21aea195",
+                "reference": "ca502901df8baf35bcd30e71a50662fd21aea195",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zfekete\\BypassReadonly\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Z.Fekete",
+                    "email": "fekzol.13ker@gmail.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/tjdraper/bypass-readonly/tree/bugfix"
+            },
+            "time": "2025-04-02T20:46:19+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "zoltanka/bypass-readonly": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

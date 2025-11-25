@@ -1,4 +1,10 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://github.com/tjdraper/bypass-readonly"
+        }
+    ],
     "name": "rxante/php-app-bootstrap",
     "description": "RxAnte's PHP App Boostrap",
     "type": "library",
@@ -31,7 +37,8 @@
         "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-deprecation-rules": "^1.2",
         "phpstan/phpstan-mockery": "^1.1",
-        "phpstan/phpstan-strict-rules": "^1.6"
+        "phpstan/phpstan-strict-rules": "^1.6",
+        "zoltanka/bypass-readonly": "dev-bugfix"
     },
     "autoload": {
         "psr-4": {
