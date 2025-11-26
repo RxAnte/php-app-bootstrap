@@ -35,17 +35,33 @@ require dirname(__DIR__) . '/vendor/autoload.php';
      * argument
      */
     ->buildContainer(
-        [RegisterBindings::class, 'register'],
+        /**
+         * `register` can take callable, string, or array of strings
+         * callable: the callable receives an instance of
+         *           `\RxAnte\AppBootstrap\Dependencies\Bindings` to register
+         *           any custom bindings
+         * string: a directory path containing callable classes used to
+         *         register dependencies. The `__invoke` method will receive
+         *         an instance of `\RxAnte\AppBootstrap\Dependencies\Bindings`
+         * array of strings: multiple directory paths containing callable
+         *                   classes for registering dependencies
+         */
+        register: [RegisterBindings::class, 'register'],
         // Optional container configuration
-        new BuildContainerConfiguration(
+        config: new BuildContainerConfiguration(
             enableCompilationToDir: '/path/to/dir',
             writeProxiesToDir: '/path/to/dir',
         ),
     )
     /**
-     * This example works similarly to `RegisterBindings`. The `register`
-     * method will receive an instance of `\Crell\Tukio\OrderedProviderInterface`
-     * with which you can register event bindings.
+     * `register` can take a callable, string, or array of strings
+     * callable: the callable receives an instance of
+     *           `\Crell\Tukio\OrderedProviderInterface` to register events
+     * string: a directory path containing callable classes used to register
+     *         events. The `__invoke` method will receive an instance of
+     *         `\Crell\Tukio\OrderedProviderInterface`
+     * array of strings: multiple directory paths containing callable classes
+     *                   for registering events
      */
     ->registerEventSubscribers([RegisterEventSubscribers::class, 'register'])
     /**

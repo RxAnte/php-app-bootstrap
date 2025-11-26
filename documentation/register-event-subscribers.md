@@ -29,6 +29,7 @@ require __DIR__ . '/vendor/autoload.php';
 (new Boot())
     ->start()
     ->buildContainer()
+    // You can use a callable, or a path that has callable classes here
     ->registerEventSubscribers([RegisterEventSubscribers::class, 'register'])
     // ...etc.
 ```

@@ -4,8 +4,6 @@ During the [HTTP](http-bootstrap.md)/[CLI](cli-bootstrap.md) boot process, one o
 
 Registering bindings is important because, while the container will autowire everything it can, some things cannot be autowired and you will need to provide some configuration. Maybe you need to set up some primitives in the constructor of a class that needs an API key, etc. Or maybe you need to map an interface to a concrete implementation. Whatever the need, you can provide a callable as the first argument on the `buildContainer` method when chaining up the boot process.
 
-At RxAnte, we use a class with a static method on it and set it up like this:
-
 ```php
 use Config\Dependencies\RegisterBindings;
 use RxAnte\AppBootstrap\Boot;
@@ -14,11 +12,12 @@ require __DIR__ . '/vendor/autoload.php';
 
 (new Boot())
     ->start()
+    // You can use a callable, or a path that has callable classes here
     ->buildContainer([RegisterBindings::class, 'register'])
     // ...etc.
 ```
 
-The argument can be any callable. The callable will receive one argument, which is an instance of `RxAnte\AppBootstrap\Dependencies\Bindings` which can be used to set up the bindings.
+The callable will receive one argument, which is an instance of `RxAnte\AppBootstrap\Dependencies\Bindings` which can be used to set up the bindings.
 
 As an example, the `RegisterBindings` class from above will look something like this:
 
