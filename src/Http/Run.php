@@ -6,6 +6,7 @@ namespace RxAnte\AppBootstrap\Http;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RxAnte\AppBootstrap\Request\ServerRequest;
 use Slim\App;
 use Slim\ResponseEmitter;
 
@@ -32,6 +33,8 @@ readonly class Run
 
         assert($request instanceof ServerRequestInterface);
 
-        $responseEmitter->emit($this->app->handle($request));
+        $responseEmitter->emit($this->app->handle(
+            new ServerRequest($request),
+        ));
     }
 }
