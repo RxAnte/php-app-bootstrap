@@ -11,6 +11,7 @@ use function is_float;
 use function is_numeric;
 use function is_scalar;
 use function is_string;
+use function mb_strtolower;
 use function sprintf;
 use function trim;
 
@@ -39,7 +40,11 @@ readonly class TypedArrayAttributes
     {
         $val = $this->attributes[$name] ?? null;
 
-        if (! is_scalar($val) || ! $this->isIntAble($val)) {
+        if (
+            ! $this->has($name) ||
+            ! is_scalar($val) ||
+            ! $this->isIntAble($val)
+        ) {
             throw new UnexpectedValueException(sprintf(
                 'Expected "%s" attribute to be int.',
                 $name,
@@ -73,7 +78,11 @@ readonly class TypedArrayAttributes
     ): float {
         $val = $this->attributes[$name] ?? null;
 
-        if (! is_scalar($val) || ! $this->isFloatable($val)) {
+        if (
+            ! $this->has($name) ||
+            ! is_scalar($val) ||
+            ! $this->isFloatable($val)
+        ) {
             throw new UnexpectedValueException(sprintf(
                 'Expected "%s" attribute to be float.',
                 $name,
@@ -99,7 +108,10 @@ readonly class TypedArrayAttributes
     {
         $val = $this->attributes[$name] ?? null;
 
-        if (! is_scalar($val)) {
+        if (
+            ! $this->has($name) ||
+            ! is_scalar($val)
+        ) {
             throw new UnexpectedValueException(sprintf(
                 'Expected "%s" attribute to be string.',
                 $name,
@@ -116,6 +128,47 @@ readonly class TypedArrayAttributes
     ): string|null {
         try {
             return $this->getString($name);
+        } catch (UnexpectedValueException) {
+            return $fallback;
+        }
+    }
+
+    public function getBoolean(string $name): bool
+    {
+        $val = $this->attributes[$name] ?? null;
+
+        if (
+            ! $this->has($name) ||
+            ! is_scalar($val)
+        ) {
+            throw new UnexpectedValueException(sprintf(
+                'Expected "%s" attribute to be boolean.',
+                $name,
+            ));
+        }
+
+        if (is_string($val)) {
+            $val = mb_strtolower($val);
+        }
+
+        if ($val === 'true') {
+            return true;
+        }
+
+        if ($val === 'false') {
+            return false;
+        }
+
+        return (bool) $val;
+    }
+
+    /** @return ($fallback is null ? bool|null : bool) */
+    public function findBoolean(
+        string $name,
+        bool|null $fallback = null,
+    ): bool|null {
+        try {
+            return $this->getBoolean($name);
         } catch (UnexpectedValueException) {
             return $fallback;
         }

@@ -112,3 +112,61 @@ it(
         expect($baz2)->toBe('test-123');
     },
 );
+
+it(
+    'gets boolean from attributes',
+    function (): void {
+        $sut = new TypedArrayAttributes([
+            'foo' => 443,
+            'foo2' => 876.4,
+            'foo3' => '098.65',
+            'foo4' => '1',
+            'foo5' => '0',
+            'foo6' => 'true',
+            'foo7' => true,
+            'foo8' => 'false',
+            'foo9' => false,
+            'foo10' => 1,
+            'foo11' => 0,
+        ]);
+
+        expect($sut->getBoolean('foo'))->toBeTrue();
+        expect($sut->findBoolean('foo'))->toBeTrue();
+
+        expect($sut->getBoolean('foo2'))->toBeTrue();
+        expect($sut->findBoolean('foo2'))->toBeTrue();
+
+        expect($sut->getBoolean('foo3'))->toBeTrue();
+        expect($sut->findBoolean('foo3'))->toBeTrue();
+
+        expect($sut->getBoolean('foo4'))->toBeTrue();
+        expect($sut->findBoolean('foo4'))->toBeTrue();
+
+        expect($sut->getBoolean('foo5'))->toBeFalse();
+        expect($sut->findBoolean('foo5'))->toBeFalse();
+
+        expect($sut->getBoolean('foo6'))->toBeTrue();
+        expect($sut->findBoolean('foo6'))->toBeTrue();
+
+        expect($sut->getBoolean('foo7'))->toBeTrue();
+        expect($sut->findBoolean('foo7'))->toBeTrue();
+
+        expect($sut->getBoolean('foo8'))->toBeFalse();
+        expect($sut->findBoolean('foo8'))->toBeFalse();
+
+        expect($sut->getBoolean('foo9'))->toBeFalse();
+        expect($sut->findBoolean('foo9'))->toBeFalse();
+
+        expect($sut->getBoolean('foo10'))->toBeTrue();
+        expect($sut->findBoolean('foo10'))->toBeTrue();
+
+        expect($sut->getBoolean('foo11'))->toBeFalse();
+        expect($sut->findBoolean('foo11'))->toBeFalse();
+
+        expect($sut->findBoolean('baz'))->toBeNull();
+        $baz2 = $sut->findBoolean('baz', true);
+        expect($baz2)->toBeTrue();
+        $baz3 = $sut->findBoolean('baz', false);
+        expect($baz3)->toBeFalse();
+    },
+);
