@@ -29,6 +29,8 @@ readonly class BootEvents
 
         if (is_callable($register)) {
             $register($this->eventProvider);
+
+            $register = [];
         }
 
         if (! is_array($register)) {
