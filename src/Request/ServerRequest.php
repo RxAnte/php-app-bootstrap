@@ -22,6 +22,8 @@ final readonly class ServerRequest implements ServerRequestInterface
 
     public TypedArrayAttributes $parsedBody;
 
+    public TypedArrayAttributes $attributes;
+
     public function __construct(private ServerRequestInterface $request)
     {
         $this->serverParams = new TypedArrayAttributes(
@@ -39,6 +41,10 @@ final readonly class ServerRequest implements ServerRequestInterface
         $this->parsedBody = new TypedArrayAttributes(
             /** @phpstan-ignore-next-line */
             $request->getParsedBody() ?? [],
+        );
+
+        $this->attributes = new TypedArrayAttributes(
+            $this->request->getAttributes(),
         );
     }
 
