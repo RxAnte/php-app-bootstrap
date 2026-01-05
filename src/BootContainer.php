@@ -10,6 +10,7 @@ use RxAnte\AppBootstrap\Dependencies\RegisterBindingsInDirectories;
 
 use function assert;
 use function is_array;
+use function is_callable;
 use function is_string;
 
 readonly class BootContainer
@@ -21,7 +22,7 @@ readonly class BootContainer
     ): BootEvents {
         $register = is_string($register) ? [$register] : $register;
 
-        if (is_array($register)) {
+        if (! is_callable($register) && is_array($register)) {
             $register = new RegisterBindingsInDirectories(
                 $register,
             );

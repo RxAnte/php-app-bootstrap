@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.2.3 - 2026-01-05
+### Fixed
+- Fixed a bug where a callable array would not be recognized and accounted for by BootContainer
+
 ## 1.2.2 - 2025-12-29
 ### Added
 - Added `attributes` as a `\RxAnte\AppBootstrap\Request\TypedArrayAttributes` type on `\RxAnte\AppBootstrap\Request\ServerRequest`
