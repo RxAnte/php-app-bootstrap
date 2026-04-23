@@ -11,6 +11,9 @@
     <file>src</file>
     <file>tests</file>
 
+    <!-- Directories to be excluded -->
+    <exclude-pattern>tests/cache</exclude-pattern>
+
     <!-- Include full Doctrine Coding Standard -->
     <rule ref="Doctrine">
         <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
