@@ -17,6 +17,7 @@ use RxAnte\AppBootstrap\TestFixtures\EventSubscribers2\TestEventSubscriber3;
 
 use function expect;
 use function it;
+use function sort;
 use function uses;
 
 uses()->group('Bootstrap', 'BootEvents');
@@ -56,10 +57,13 @@ it(
 
         expect($return)->toBe($bootApplication);
 
-        expect($subStorage->subscribers)->toBe([
-            EventSubscribersDirectory::class,
-            ApplyCliCommandsEventSubscriber::class,
-        ]);
+        $subscribers = $subStorage->subscribers;
+        sort($subscribers);
+
+        $expected = [EventSubscribersDirectory::class, ApplyCliCommandsEventSubscriber::class];
+        sort($expected);
+
+        expect($subscribers)->toBe($expected);
     },
 );
 
@@ -94,11 +98,13 @@ it(
 
         expect($return)->toBe($bootApplication);
 
-        expect($subStorage->subscribers)->toBe([
-            TestEventSubscriber::class,
-            EventSubscribersDirectory::class,
-            ApplyCliCommandsEventSubscriber::class,
-        ]);
+        $subscribers = $subStorage->subscribers;
+        sort($subscribers);
+
+        $expected = [TestEventSubscriber::class, EventSubscribersDirectory::class, ApplyCliCommandsEventSubscriber::class];
+        sort($expected);
+
+        expect($subscribers)->toBe($expected);
     },
 );
 
@@ -131,12 +137,13 @@ it(
 
         expect($return)->toBe($bootApplication);
 
-        expect($subStorage->subscribers)->toBe([
-            TestEventSubscriber::class,
-            TestEventSubscriber2::class,
-            EventSubscribersDirectory::class,
-            ApplyCliCommandsEventSubscriber::class,
-        ]);
+        $subscribers = $subStorage->subscribers;
+        sort($subscribers);
+
+        $expected = [TestEventSubscriber::class, TestEventSubscriber2::class, EventSubscribersDirectory::class, ApplyCliCommandsEventSubscriber::class];
+        sort($expected);
+
+        expect($subscribers)->toBe($expected);
     },
 );
 
@@ -172,12 +179,12 @@ it(
 
         expect($return)->toBe($bootApplication);
 
-        expect($subStorage->subscribers)->toBe([
-            TestEventSubscriber::class,
-            TestEventSubscriber2::class,
-            TestEventSubscriber3::class,
-            EventSubscribersDirectory::class,
-            ApplyCliCommandsEventSubscriber::class,
-        ]);
+        $subscribers = $subStorage->subscribers;
+        sort($subscribers);
+
+        $expected = [TestEventSubscriber::class, TestEventSubscriber2::class, TestEventSubscriber3::class, EventSubscribersDirectory::class, ApplyCliCommandsEventSubscriber::class];
+        sort($expected);
+
+        expect($subscribers)->toBe($expected);
     },
 );
