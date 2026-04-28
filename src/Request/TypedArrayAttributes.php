@@ -6,7 +6,11 @@ namespace RxAnte\AppBootstrap\Request;
 
 use UnexpectedValueException;
 
+use function array_filter;
 use function array_key_exists;
+use function array_map;
+use function array_values;
+use function is_array;
 use function is_float;
 use function is_numeric;
 use function is_scalar;
@@ -147,6 +151,11 @@ readonly class TypedArrayAttributes
             ));
         }
 
+        return $this->castBool($val);
+    }
+
+    private function castBool(mixed $val): bool
+    {
         if (is_string($val)) {
             $val = mb_strtolower($val);
         }
@@ -172,5 +181,230 @@ readonly class TypedArrayAttributes
         } catch (UnexpectedValueException) {
             return $fallback;
         }
+    }
+
+    /** @return mixed[] */
+    public function getArray(string $name): array
+    {
+        $val = $this->attributes[$name] ?? null;
+
+        if (! $this->has($name) || ! is_array($val)) {
+            throw new UnexpectedValueException(sprintf(
+                'Expected "%s" attribute to be array.',
+                $name,
+            ));
+        }
+
+        return $val;
+    }
+
+    /** @return mixed[] */
+    public function findArray(string $name): array
+    {
+        if (! $this->has($name)) {
+            return [];
+        }
+
+        $val = $this->attributes[$name];
+
+        if (! is_array($val)) {
+            return [];
+        }
+
+        return $val;
+    }
+
+    /** @return string[] */
+    public function getArrayStrings(string $name): array
+    {
+        $val = $this->attributes[$name] ?? null;
+
+        if (! $this->has($name) || ! is_array($val)) {
+            throw new UnexpectedValueException(sprintf(
+                'Expected "%s" attribute to be array of strings.',
+                $name,
+            ));
+        }
+
+        foreach ($val as $item) {
+            if (! is_string($item)) {
+                throw new UnexpectedValueException(sprintf(
+                    'Expected "%s" attribute to be array of strings.',
+                    $name,
+                ));
+            }
+        }
+
+        return $val;
+    }
+
+    /** @return string[] */
+    public function findArrayStrings(string $name): array
+    {
+        if (! $this->has($name)) {
+            return [];
+        }
+
+        $val = $this->attributes[$name];
+
+        if (! is_array($val)) {
+            return [];
+        }
+
+        return array_values(array_filter(
+            $val,
+            static fn (mixed $item): bool => is_string($item),
+        ));
+    }
+
+    /** @return bool[] */
+    public function getArrayBooleans(string $name): array
+    {
+        $val = $this->attributes[$name] ?? null;
+
+        if (! $this->has($name) || ! is_array($val)) {
+            throw new UnexpectedValueException(sprintf(
+                'Expected "%s" attribute to be array of booleans.',
+                $name,
+            ));
+        }
+
+        foreach ($val as $item) {
+            if (! is_scalar($item)) {
+                throw new UnexpectedValueException(sprintf(
+                    'Expected "%s" attribute to be array of booleans.',
+                    $name,
+                ));
+            }
+        }
+
+        return array_values(array_map(
+            fn (mixed $item): bool => $this->castBool($item),
+            $val,
+        ));
+    }
+
+    /** @return bool[] */
+    public function findArrayBooleans(string $name): array
+    {
+        if (! $this->has($name)) {
+            return [];
+        }
+
+        $val = $this->attributes[$name];
+
+        if (! is_array($val)) {
+            return [];
+        }
+
+        return array_values(array_map(
+            fn (mixed $item): bool => $this->castBool($item),
+            array_filter(
+                $val,
+                static fn (mixed $item): bool => is_scalar($item),
+            ),
+        ));
+    }
+
+    /** @return float[] */
+    public function getArrayFloats(string $name): array
+    {
+        $val = $this->attributes[$name] ?? null;
+
+        if (! $this->has($name) || ! is_array($val)) {
+            throw new UnexpectedValueException(sprintf(
+                'Expected "%s" attribute to be array of floats.',
+                $name,
+            ));
+        }
+
+        foreach ($val as $item) {
+            if (! is_scalar($item) || ! $this->isFloatable($item)) {
+                throw new UnexpectedValueException(sprintf(
+                    'Expected "%s" attribute to be array of floats.',
+                    $name,
+                ));
+            }
+        }
+
+        return array_values(array_map(
+            /** @phpstan-ignore-next-line */
+            static fn (mixed $item): float => (float) $item,
+            $val,
+        ));
+    }
+
+    /** @return float[] */
+    public function findArrayFloats(string $name): array
+    {
+        if (! $this->has($name)) {
+            return [];
+        }
+
+        $val = $this->attributes[$name];
+
+        if (! is_array($val)) {
+            return [];
+        }
+
+        return array_values(array_map(
+            static fn (mixed $item): float => (float) $item,
+            array_filter(
+                $val,
+                fn (mixed $item): bool => is_scalar($item) &&
+                    $this->isFloatable($item),
+            ),
+        ));
+    }
+
+    /** @return int[] */
+    public function getArrayInts(string $name): array
+    {
+        $val = $this->attributes[$name] ?? null;
+
+        if (! $this->has($name) || ! is_array($val)) {
+            throw new UnexpectedValueException(sprintf(
+                'Expected "%s" attribute to be array of ints.',
+                $name,
+            ));
+        }
+
+        foreach ($val as $item) {
+            if (! $this->isIntAble($item)) {
+                throw new UnexpectedValueException(sprintf(
+                    'Expected "%s" attribute to be array of ints.',
+                    $name,
+                ));
+            }
+        }
+
+        return array_values(array_map(
+            /** @phpstan-ignore-next-line */
+            static fn (mixed $item): int => (int) $item,
+            $val,
+        ));
+    }
+
+    /** @return int[] */
+    public function findArrayInts(string $name): array
+    {
+        if (! $this->has($name)) {
+            return [];
+        }
+
+        $val = $this->attributes[$name];
+
+        if (! is_array($val)) {
+            return [];
+        }
+
+        return array_values(array_map(
+            static fn (mixed $item): int => (int) $item,
+            array_filter(
+                $val,
+                fn (mixed $item): bool => is_scalar($item) &&
+                    $this->isIntAble($item),
+            ),
+        ));
     }
 }
