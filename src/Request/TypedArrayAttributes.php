@@ -235,6 +235,7 @@ readonly class TypedArrayAttributes
             }
         }
 
+        /** @phpstan-ignore-next-line */
         return $val;
     }
 

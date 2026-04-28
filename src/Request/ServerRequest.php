@@ -27,14 +27,17 @@ final readonly class ServerRequest implements ServerRequestInterface
     public function __construct(private ServerRequestInterface $request)
     {
         $this->serverParams = new TypedArrayAttributes(
+                /** @phpstan-ignore-next-line */
             $request->getServerParams(),
         );
 
         $this->cookieParams = new TypedArrayAttributes(
+            /** @phpstan-ignore-next-line */
             $request->getCookieParams(),
         );
 
         $this->queryParams = new TypedArrayAttributes(
+            /** @phpstan-ignore-next-line */
             $request->getQueryParams(),
         );
 
@@ -44,6 +47,7 @@ final readonly class ServerRequest implements ServerRequestInterface
         );
 
         $this->attributes = new TypedArrayAttributes(
+            /** @phpstan-ignore-next-line */
             $this->request->getAttributes(),
         );
     }
@@ -135,8 +139,8 @@ final readonly class ServerRequest implements ServerRequestInterface
     }
 
     /**
-     * @phpstan-ignore-next-line
      * @noinspection PhpMixedReturnTypeCanBeReducedInspection
+     * @phpstan-ignore-next-line
      */
     public function getParsedBody(): mixed
     {

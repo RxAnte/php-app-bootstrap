@@ -13,6 +13,7 @@ use Whoops\Run as WhoopsRun;
 use function class_exists;
 use function error_reporting;
 use function ini_set;
+use function is_string;
 
 use const E_ALL;
 
@@ -56,8 +57,13 @@ readonly class Boot
 
     private function isJsonRequest(): bool
     {
+        $serverHttpAccept = $_SERVER['HTTP_ACCEPT'] ?? '';
+        $serverHttpAccept = is_string($serverHttpAccept) ?
+            $serverHttpAccept :
+            '';
+
         return (new IsJsonRequest())->checkHttpAcceptString(
-            httpAccept: (string) ($_SERVER['HTTP_ACCEPT'] ?? ''),
+            httpAccept: $serverHttpAccept,
         );
     }
 }

@@ -23,21 +23,15 @@
         "psr/container": "^2.0",
         "psr/event-dispatcher": "^1.0",
         "psr/log": "^1.0 || ^2.0 || ^3.0",
+        "rxante/coding-standards": "^3",
         "slim/csrf": "^1.5",
         "slim/psr7": "^1.7",
         "slim/slim": "^4.14"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^12.0",
         "filp/whoops": "^2.16",
-        "jetbrains/phpstorm-attributes": "^1.2",
         "mockery/mockery": "^1.6",
         "pestphp/pest": "^3.5",
-        "phpcsstandards/php_codesniffer": "^3.10",
-        "phpstan/phpstan": "^1.12",
-        "phpstan/phpstan-deprecation-rules": "^1.2",
-        "phpstan/phpstan-mockery": "^1.1",
-        "phpstan/phpstan-strict-rules": "^1.6",
         "zoltanka/bypass-readonly": "dev-bugfix"
     },
     "autoload": {
