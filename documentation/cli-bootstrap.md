@@ -64,5 +64,7 @@ require __DIR__ . '/vendor/autoload.php';
      */
     ->buildCliApplication()
     ->applyCommands()
-    ->runApplication();
+    ->runApplication(exitWithStatusCode: true);
 ```
+
+`exitWithStatusCode: true` makes the process exit with the command's status code, so scripts and deploy pipelines can detect a failed command. It defaults to `false` so existing apps keep exiting with 0. Either way, `runApplication()` returns the exit code.

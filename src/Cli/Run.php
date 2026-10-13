@@ -17,9 +17,10 @@ readonly class Run
     public function runApplication(
         InputInterface|null $input = null,
         OutputInterface|null $output = null,
-    ): void {
-        $this->app->setAutoExit(false);
+        bool $exitWithStatusCode = false,
+    ): int {
+        $this->app->setAutoExit($exitWithStatusCode);
 
-        $this->app->run($input, $output);
+        return $this->app->run($input, $output);
     }
 }

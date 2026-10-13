@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.4.0 - 2026-10-13
+### Added
+- Added an `exitWithStatusCode` argument to `\RxAnte\AppBootstrap\Cli\Run::runApplication()` that lets the CLI exit with the command's status code
+
+### Changed
+- `\RxAnte\AppBootstrap\Cli\Run::runApplication()` now returns the command's exit code instead of `void`
+
 ## 1.3.0 - 2026-04-28
 ### Added
 - Added new features to `\RxAnte\AppBootstrap\Request\TypedArrayAttributes`: `getArray`, `findArray`, `getArrayStrings`, `findArrayStrings`, `getArrayBooleans`, `findArrayBooleans`, `getArrayFloats`, `findArrayFloats`, `getArrayInts`, `findArrayInts`,
