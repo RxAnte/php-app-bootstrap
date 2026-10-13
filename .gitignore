@@ -6,3 +6,8 @@
 /vendor
 /sync-on-save-env.php
 /.idea/copilot.*
+
+# AI guidance (generated/installed by `./ai-setup.sh`)
+/ai-project-architecture-guidance
+/CLAUDE.md
+/.ai-guidance-last-checked

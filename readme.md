@@ -12,6 +12,10 @@
 - [Set Up HTTP Application Middleware](documentation/apply-middleware-event.md)
 - [Set Up CLI Commands](documentation/apply-cli-commands-event.md)
 
+## AI Guidance
+
+Run `./ai-setup.sh` to install RxAnte's AI architecture guidance and generate `CLAUDE.md`. Both are gitignored. The script pulls updates at most once a day; pass `--force` to update now. It requires SSH access to RxAnte's GitLab.
+
 ## License
 
 Copyright 2024 RxAnte, Inc
